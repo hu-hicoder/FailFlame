@@ -1,6 +1,6 @@
 {
-  "name": "failflame",
-  "displayName": "FailFlame",
+  "name": "fail-flame",
+  "displayName": "fail-flame",
   "description": "",
   "version": "0.0.1",
   "engines": {
@@ -14,7 +14,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "failflame.helloWorld",
+        "command": "fail-flame.helloWorld",
         "title": "Hello World"
       }
     ]
