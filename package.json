@@ -1,12 +1,12 @@
 {
 	"name": "fail-flame",
-	"description": "A language server example",
-	"author": "Microsoft Corporation",
+	"description": "A fail-flame language server",
+	"author": "hicoder",
 	"license": "MIT",
 	"version": "1.0.0",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-extension-samples"
+		"url": "https://github.com/hu-hicoder/FailFlame"
 	},
 	"publisher": "hicoder",
 	"categories": [],
@@ -39,7 +39,7 @@
 						"messages",
 						"verbose"
 					],
-					"default": "off",
+					"default": "verbose",
 					"description": "Traces the communication between VS Code and the language server."
 				}
 			}

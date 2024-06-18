@@ -23,6 +23,9 @@ import {
 	TextDocument
 } from 'vscode-languageserver-textdocument';
 
+import { uppercaseDiagnostics } from './diagnostics/uppercase';
+import { tooManyLinesDiagnostics } from './diagnostics/tooManylines';
+
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
 const connection = createConnection(ProposedFeatures.all);
@@ -87,7 +90,7 @@ connection.onInitialized(() => {
 });
 
 // The example settings
-interface ExampleSettings {
+export interface ExampleSettings {
 	maxNumberOfProblems: number;
 }
 
@@ -141,7 +144,7 @@ connection.languages.diagnostics.on(async (params) => {
 	if (document !== undefined) {
 		return {
 			kind: DocumentDiagnosticReportKind.Full,
-			items: await validateTextDocument(document)
+			items: await failFlameTextDocument(document)
 		} satisfies DocumentDiagnosticReport;
 	} else {
 		// We don't know the document. We can either try to read it from disk
@@ -156,51 +159,19 @@ connection.languages.diagnostics.on(async (params) => {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(change => {
-	validateTextDocument(change.document);
+	failFlameTextDocument(change.document);
 });
 
-async function validateTextDocument(textDocument: TextDocument): Promise<Diagnostic[]> {
+async function failFlameTextDocument(textDocument: TextDocument): Promise<Diagnostic[]> {	
 	// In this simple example we get the settings for every validate run.
 	const settings = await getDocumentSettings(textDocument.uri);
 
-	// The validator creates diagnostics for all uppercase words length 2 and more
-	const text = textDocument.getText();
-	const pattern = /\b[A-Z]{2,}\b/g;
-	let m: RegExpExecArray | null;
-
-	let problems = 0;
 	const diagnostics: Diagnostic[] = [];
-	while ((m = pattern.exec(text)) && problems < settings.maxNumberOfProblems) {
-		problems++;
-		const diagnostic: Diagnostic = {
-			severity: DiagnosticSeverity.Warning,
-			range: {
-				start: textDocument.positionAt(m.index),
-				end: textDocument.positionAt(m.index + m[0].length)
-			},
-			message: `${m[0]} is all uppercase.`,
-			source: 'ex'
-		};
-		if (hasDiagnosticRelatedInformationCapability) {
-			diagnostic.relatedInformation = [
-				{
-					location: {
-						uri: textDocument.uri,
-						range: Object.assign({}, diagnostic.range)
-					},
-					message: 'Spelling matters'
-				},
-				{
-					location: {
-						uri: textDocument.uri,
-						range: Object.assign({}, diagnostic.range)
-					},
-					message: 'Particularly for names'
-				}
-			];
-		}
-		diagnostics.push(diagnostic);
-	}
+	const uppercase = await uppercaseDiagnostics(textDocument, settings, hasDiagnosticRelatedInformationCapability);
+	const tooManyLines = await tooManyLinesDiagnostics(textDocument, settings, hasDiagnosticRelatedInformationCapability);
+	diagnostics.push(...uppercase);
+	diagnostics.push(...tooManyLines);
+
 	return diagnostics;
 }
 
