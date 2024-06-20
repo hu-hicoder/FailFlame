@@ -20,6 +20,8 @@ export function activateDynamicVerticalLines() {
 function createRandomDecorations(editor: vscode.TextEditor): vscode.DecorationOptions[] {
     const decorations: vscode.DecorationOptions[] = [];
     const text = editor.document.getText();
+	const len = text.length;
+	const num_of_lines = len / 20;
     const lines = text.split('\n');
     const numLines = lines.length;
 
@@ -34,7 +36,7 @@ function createRandomDecorations(editor: vscode.TextEditor): vscode.DecorationOp
     }
 
     // ランダムに10個の縦線を引く
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < num_of_lines; i++) {
         const randomLine = Math.floor(Math.random() * numLines);
         const randomChar = Math.floor(Math.random() * (lines[randomLine].length + 1));
         const position = new vscode.Position(randomLine, randomChar);
