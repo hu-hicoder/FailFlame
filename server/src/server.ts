@@ -26,6 +26,7 @@ import {
 import { uppercaseDiagnostics } from './diagnostics/uppercase';
 import { tooManyLinesDiagnostics } from './diagnostics/tooManylines';
 import { tooManyForLoopsDiagnostics } from './diagnostics/tooManyfors';
+import { charCountDiagnostics } from './diagnostics/charCount';
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -171,8 +172,10 @@ async function failFlameTextDocument(textDocument: TextDocument): Promise<Diagno
 	const uppercase = await uppercaseDiagnostics(textDocument, settings, hasDiagnosticRelatedInformationCapability);
 	const tooManyLines = await tooManyLinesDiagnostics(textDocument, settings, hasDiagnosticRelatedInformationCapability);
 	const tooManyfors = await tooManyForLoopsDiagnostics(textDocument, settings, hasDiagnosticRelatedInformationCapability);
+	const charCount = await charCountDiagnostics(textDocument, settings, hasDiagnosticRelatedInformationCapability);
 	diagnostics.push(...uppercase);
 	diagnostics.push(...tooManyLines);
+	diagnostics.push(...charCount);
 
 	return diagnostics;
 }
