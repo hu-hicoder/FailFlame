@@ -13,6 +13,7 @@ import {
 	ServerOptions,
 	TransportKind
 } from 'vscode-languageclient/node';
+import { activateDynamicFontSize } from './fontSize';
 
 let client: LanguageClient;
 
@@ -54,6 +55,7 @@ export function activate(context: ExtensionContext) {
 	client.start();
 
 	activateDynamicVerticalLines();
+	activateDynamicFontSize();
 }
 
 export function deactivate(): Thenable<void> | undefined {
