@@ -176,6 +176,7 @@ async function failFlameTextDocument(textDocument: TextDocument): Promise<Diagno
 	diagnostics.push(...uppercase);
 	diagnostics.push(...tooManyLines);
 	diagnostics.push(...charCount);
+	diagnostics.push(...tooManyfors);
 
 	return diagnostics;
 }
