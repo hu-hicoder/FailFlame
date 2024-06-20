@@ -5,6 +5,7 @@
 
 import * as path from 'path';
 import { workspace, ExtensionContext } from 'vscode';
+import { activateDynamicVerticalLines, deactivateDynamicVerticalLines } from './non-chara-effect';
 
 import {
 	LanguageClient,
@@ -51,9 +52,14 @@ export function activate(context: ExtensionContext) {
 
 	// Start the client. This will also launch the server
 	client.start();
+
+	activateDynamicVerticalLines();
 }
 
 export function deactivate(): Thenable<void> | undefined {
+	
+	deactivateDynamicVerticalLines();
+
 	if (!client) {
 		return undefined;
 	}

@@ -28,12 +28,12 @@ export async function tooManyForLoopsDiagnostics(textDocument: TextDocument, set
 		while ((lastMatch = forPattern.exec(text)) !== null) {
 			if (forCount === 4) {
 				const diagnostic: Diagnostic = {
-					severity: DiagnosticSeverity.Warning,
+					severity: DiagnosticSeverity.Information,
 					range: {
 						start: textDocument.positionAt(lastMatch.index),
 						end: textDocument.positionAt(lastMatch.index + lastMatch[0].length)
 					},
-					message: `このコードには 'for' 文が ${forCount} 回使われています。使い過ぎです！`,
+					message: `'for' 文が ${forCount} もある！多くない？`,
 					source: 'too-many-for-loops'
 				};
 				if (hasDiagnosticRelatedInformationCapability) {
@@ -43,7 +43,7 @@ export async function tooManyForLoopsDiagnostics(textDocument: TextDocument, set
 								uri: textDocument.uri,
 								range: Object.assign({}, diagnostic.range)
 							},
-							message: 'ループを減らしてコードをシンプルにしましょう。'
+							message: 'シンプルにできそう'
 						}
 					];
 				}

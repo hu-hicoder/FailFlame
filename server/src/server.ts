@@ -173,6 +173,7 @@ async function failFlameTextDocument(textDocument: TextDocument): Promise<Diagno
 	const tooManyfors = await tooManyForLoopsDiagnostics(textDocument, settings, hasDiagnosticRelatedInformationCapability);
 	diagnostics.push(...uppercase);
 	diagnostics.push(...tooManyLines);
+	diagnostics.push(...tooManyfors);
 
 	return diagnostics;
 }
