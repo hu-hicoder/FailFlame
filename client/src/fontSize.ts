@@ -15,7 +15,6 @@ export function activateDynamicFontSize() {
               newSize,
               vscode.ConfigurationTarget.Global
             );
-          vscode.window.showInformationMessage(`Font size set to ${newSize}`);
         }
       }
     });
