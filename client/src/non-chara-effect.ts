@@ -17,38 +17,35 @@ export function activateDynamicVerticalLines() {
   }
 }
 
-function createRandomDecorations(
-  editor: vscode.TextEditor
-): vscode.DecorationOptions[] {
-  const decorations: vscode.DecorationOptions[] = [];
-  const text = editor.document.getText();
-  const len = text.length;
-  const num_of_lines = len / 20;
-  const lines = text.split("\n");
-  const numLines = lines.length;
 
-  if (!activeDecoration) {
-    activeDecoration = vscode.window.createTextEditorDecorationType({
-      before: {
-        contentText: "",
-        border: "1px solid orange",
-        margin: "0 0 0 -1px", // Adjust margin to position the line correctly
-      },
-    });
-  }
+function createRandomDecorations(editor: vscode.TextEditor): vscode.DecorationOptions[] {
+    const decorations: vscode.DecorationOptions[] = [];
+    const text = editor.document.getText();
+	const len = text.length;
+	const num_of_lines = len / 20;
+    const lines = text.split('\n');
+    const numLines = lines.length;
 
-  // ランダムに10個の縦線を引く
-  for (let i = 0; i < num_of_lines; i++) {
-    const randomLine = Math.floor(Math.random() * numLines);
-    const randomChar = Math.floor(
-      Math.random() * (lines[randomLine].length + 1)
-    );
-    const position = new vscode.Position(randomLine, randomChar);
-    const range = new vscode.Range(position, position);
-    decorations.push({ range });
-  }
+    if (!activeDecoration) {
+        activeDecoration = vscode.window.createTextEditorDecorationType({
+            before: {
+                contentText: '',
+                border: '1px solid gray',
+                margin: '0 0 0 -1px', // Adjust margin to position the line correctly
+            }
+        });
+    }
 
-  return decorations;
+    // ランダムに10個の縦線を引く
+    for (let i = 0; i < num_of_lines; i++) {
+        const randomLine = Math.floor(Math.random() * numLines);
+        const randomChar = Math.floor(Math.random() * (lines[randomLine].length + 1));
+        const position = new vscode.Position(randomLine, randomChar);
+        const range = new vscode.Range(position, position);
+        decorations.push({ range });
+    }
+
+    return decorations;
 }
 
 export function deactivateDynamicVerticalLines() {
