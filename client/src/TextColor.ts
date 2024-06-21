@@ -33,7 +33,6 @@ export function activateDynamicTextColor() {
 
         for (let i = 0; i < words.length; i++) {
           const word = words[i];
-          console.log(word);
           const startPos = document.positionAt(text.indexOf(word, index));
           const endPos = document.positionAt(
             text.indexOf(word, index) + word.length
