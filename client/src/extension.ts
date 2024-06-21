@@ -14,6 +14,7 @@ import {
 	TransportKind
 } from 'vscode-languageclient/node';
 import { activateDynamicFontSize } from './fontSize';
+import { activateDynamicTextColor, deactivateDynamicTextColor } from './TextColor';
 
 let client: LanguageClient;
 
@@ -56,11 +57,13 @@ export function activate(context: ExtensionContext) {
 
 	activateDynamicVerticalLines();
 	activateDynamicFontSize();
+	activateDynamicTextColor();
 }
 
 export function deactivate(): Thenable<void> | undefined {
 	
 	deactivateDynamicVerticalLines();
+	deactivateDynamicTextColor();
 
 	if (!client) {
 		return undefined;
