@@ -1,21 +1,22 @@
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
 
 let activeDecoration: vscode.TextEditorDecorationType | undefined = undefined;
 
 export function activateDynamicVerticalLines() {
-    const editor = vscode.window.activeTextEditor;
-    if (editor) {
-        const decorations = createRandomDecorations(editor);
-        editor.setDecorations(activeDecoration, decorations);
+  const editor = vscode.window.activeTextEditor;
+  if (editor) {
+    const decorations = createRandomDecorations(editor);
+    editor.setDecorations(activeDecoration, decorations);
 
-        vscode.workspace.onDidChangeTextDocument(event => {
-            if (event.document === editor.document) {
-                const newDecorations = createRandomDecorations(editor);
-                editor.setDecorations(activeDecoration, newDecorations);
-            }
-        });
-    }
+    vscode.workspace.onDidChangeTextDocument((event) => {
+      if (event.document === editor.document) {
+        const newDecorations = createRandomDecorations(editor);
+        editor.setDecorations(activeDecoration, newDecorations);
+      }
+    });
+  }
 }
+
 
 function createRandomDecorations(editor: vscode.TextEditor): vscode.DecorationOptions[] {
     const decorations: vscode.DecorationOptions[] = [];
@@ -48,8 +49,8 @@ function createRandomDecorations(editor: vscode.TextEditor): vscode.DecorationOp
 }
 
 export function deactivateDynamicVerticalLines() {
-    if (activeDecoration) {
-        activeDecoration.dispose();
-        activeDecoration = undefined;
-    }
+  if (activeDecoration) {
+    activeDecoration.dispose();
+    activeDecoration = undefined;
+  }
 }
