@@ -29,7 +29,7 @@ function createRandomDecorations(editor: vscode.TextEditor): vscode.DecorationOp
         activeDecoration = vscode.window.createTextEditorDecorationType({
             before: {
                 contentText: '',
-                border: '1px solid orange',
+                border: '1px solid gray',
                 margin: '0 0 0 -1px', // Adjust margin to position the line correctly
             }
         });
