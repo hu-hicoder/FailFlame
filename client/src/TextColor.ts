@@ -6,8 +6,13 @@ export function activateDynamicTextColor() {
   const editor = vscode.window.activeTextEditor;
 
   if (editor) {
-    vscode.workspace.onDidSaveTextDocument((event) => {
-      // if (event.document !== editor.document) {
+    vscode.workspace.onDidChangeTextDocument((event) => {
+      if (Math.floor(Math.random() * 10) === 3) {
+
+        if (decorationsArray.length > 0) {
+          deactivateDynamicTextColor();
+        }
+
         const document = editor.document;
         const text = document.getText();
 
@@ -51,7 +56,7 @@ export function activateDynamicTextColor() {
 
           index += word.length;
         }
-      // }
+      }
     });
   }
 }
